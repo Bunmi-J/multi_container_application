@@ -1,6 +1,6 @@
-# multi_container_application
-This project creates a multi-container application using Docker Compose. The docker compose file creates a service that enables multiple container application to run and communicate. The Docker compose defines the entire multi-container application in a single YAML file, eliminating the need to run multiple docker run commands. The file specifies configurations for the CSV App and Database app containers, their dependencies, environment variables, volumes and networks. using few 
-Project Overview
+# Project Overview multi_container_application
+This project creates a multi-container application using Docker Compose. The docker compose file creates a service that enables multiple container application to run and communicate via a common network. The Docker compose defines the entire multi-container application in a single YAML file, eliminating the need to run multiple docker run commands. The file specifies configurations for the CSV app and Database app containers, their dependencies which are saved in the requirement.txt, environment variables, volumes and networks. 
+## Multi Container Application Functionalities
 You have developed a Streamlit application with the following functionalities:
 
 A user interface for CSV file upload.
