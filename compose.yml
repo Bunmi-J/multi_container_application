@@ -1,0 +1,50 @@
+services:
+
+  app-db:
+
+    image: postgres:18-alpine
+    env_file:
+      - .env
+
+
+    #environment:
+
+     # - POSTGRES_PASSWORD=postgres
+
+    volumes:
+
+      - app-db-volume:/var/lib/postgresql/data
+
+
+  csv-app:
+
+    # image: my_streamlit_app:v1 
+
+    build: .
+
+    ports:
+
+      - 8501:8501
+    env_file:
+      - .env
+
+    #environment:
+
+     # - POSTGRES_HOST=app-db
+
+      #- POSTGRES_USER=postgres
+
+      #- POSTGRES_PASSWORD=postgres
+
+      #- POSTGRES_DB=postgres
+
+      #- POSTGRES_PORT=5432
+
+    depends_on:
+
+      - app-db
+
+# Ensures the database persists even if the container is removed
+volumes:
+
+  app-db-volume:
