@@ -1,11 +1,12 @@
-# Project Overview multi_container_application
-This project creates a multi-container application using Docker Compose. The docker compose file creates a service that enables multiple container application to run and communicate via a common network. The Docker compose defines the entire multi-container application in a single YAML file, eliminating the need to run multiple docker run commands. The file specifies configurations for the CSV app and Database app containers, their dependencies which are saved in the requirement.txt, environment variables, volumes and networks. 
+# Creating a Multi Container Application
+## Project Overview
+This project creates a multi-container application using Docker Compose. The docker compose file is used to create a service that enables multiple container application to run and communicate via a common network. The Docker compose defines the entire multi-container application in a single YAML file, eliminating the need to run multiple docker run commands. The file specifies configurations for the CSV app services and Database app services, their dependencies which are saved in the requirements.txt, environment variables, volumes and networks. 
 ## Multi Container Streamlit Application Functionalities
 The Streamlit application will have the following functionalities:
 - A user interface for CSV file upload.
-- Once a CSV file is uploaded, the application loads it into a PostgreSQL     database table for persistence.
+- Once a CSV file is uploaded, the application loads it into a PostgreSQL database table for persistence.
 - The application reads the loaded data from the PostgreSQL database table.
-- The application displays the first 5 rows and the summary statistics of     the numerical columns in the table.
+- The application displays the first 5 rows and the summary statistics of the numerical columns in the table.
 
 ## Task
 - Package the application and its dependencies into a Docker image for easy deployment.
@@ -14,9 +15,9 @@ The Streamlit application will have the following functionalities:
 
 ## Step-by-Step Instructions
 ### Set up your Project environment
-   - Create a new folder using the this command: mkdir <folder_name>
+   - Create a new folder using the command: mkdir <folder_name>
    - Navigate into the folder created with this command: cd <folder_name>
-   - Create a Dockerfile. See sample docker file in the repo
+   - Create a Dockerfile with the command:nano dockerfile. See sample docker file in the repo
        Use a lightweight Python image as the base image.
        Copy and install the application dependencies (requirements.txt).
        Sets environment variables using .env
@@ -25,7 +26,7 @@ The Streamlit application will have the following functionalities:
        Set the container's entrypoint to run the application using:
        streamlit run <path/filename.py>
        Ensure the image follows best practices to leverage Docker build  caching.
-  - Package the application into a Docker image by building the csv app image using the docker file created with this command:        docker build -t my_streamlit_app:v1 .
+  - Package the application into a Docker image using the docker file created with this command:        docker build -t my_streamlit_app:v1 .
   - Pull the postgres 18-alpine image and run it using the below command: 
    docker run -d --name app-db --network csv-app -e    POSTGRES_PASSWORD=postgres postgres:18-alpine     # This download newer image of postgres:18-alpine and set up the container networking
 
@@ -47,7 +48,7 @@ The Streamlit application will have the following functionalities:
       POSTGRES_DB: postgres
       POSTGRES_PORT: 5432
     - Depends on the database service.
-### Database Service
+  ### Database Service
 - Use a lightweight PostgreSQL image.
 - Use the following environment variable:
 environment:
@@ -68,18 +69,17 @@ Attaching to app-db-1, csv-app-1
 - Confirm the application works as expected.
 - Verify Database Persistence
 
-Execute into your database container:
-docker exec -it <database_container_id> psql -U postgres
-docker exec -it  dec_docker_training-app-db-1 psql -U postgres -d postgres
-Run the following SQL command to confirm the uploaded data is present:
+## Execute into the Database app Container to verify Database Persistence:
+
+- Use this command:docker exec -it  dec_docker_training-app-db-1 psql -U postgres -d postgres
+- Run the following SQL command to confirm the uploaded CSV file i.e student table is present:
 - postgres=# \dt  (list all tables in the database
 - SELECT * FROM student;  (select all records in the student table)
-Push Your Application Image to Docker Hub
 
-Tag and push your Docker image to Docker Hub
+## Push the Application Image to Docker Hub
+- Use this command to tag the image before pushing to docker hub.: docker tag my_streamlit_app:v1 bunmij/my_streamlit_app:v1
+- Command to push the docker image to docker hub: docker push bunmij/my_streamlit_app:v1
 
-Deliverables
-Submit a GitHub repo containing your Dockerfile and compose.yml file with a clear README.
-Provide a link to your Docker image on Docker Hub.
+## A link to the Docker image on Docker Hub.
 https://hub.docker.com/repository/docker/bunmij/my_streamlit_app/general
 
